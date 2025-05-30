@@ -1,27 +1,51 @@
-use std::{
-    io::{prelude::*, BufReader},
-    net::{TcpListener, TcpStream},
-};
+use yew_router::prelude::*;
+use yew::prelude::*;
 
-fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+mod site;
 
-    for stream in listener.incoming() {
-        let stream = stream.unwrap();
+#[derive(Clone, Routable, PartialEq)]
+enum Route {
+    #[at("/")]
+    Home,
+    #[at("/secure")]
+    Secure,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
+}
 
-        handle_connection(stream);
+#[function_component(Secure)]
+fn secure() -> Html {
+    let navigator = use_navigator().unwrap();
+
+    let onclick_home = Callback::from(move |_| navigator.push(&Route::Home));
+    html! {
+        <div>
+            <h1>{ "Secure" }</h1>
+            <button onclick={onclick_home}>{ "Go Home" }</button>
+        </div>
     }
 }
 
-fn handle_connection(mut stream: TcpStream) {
-    let buf_reader = BufReader::new(&mut stream);
-    let http_request: Vec<_> = buf_reader
-        .lines()
-        .map(|result| result.unwrap())
-        .take_while(|line| !line.is_empty())
-        .collect();
+fn switch(routes: Route) -> Html {
+    match routes {
+        Route::Home => html! { <site::home::Home /> },
+        Route::Secure => html! {
+            <Secure />
+        },
+        Route::NotFound => html! { <h1>{ "404" }</h1> },
+    }
+}
 
-    let response = "HTTP/1.1 200 OK\r\n\r\n";
+#[function_component(Main)]
+fn app() -> Html {
+    html! {
+        <BrowserRouter>
+            <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
+        </BrowserRouter>
+    }
+}
 
-    stream.write_all(response.as_bytes()).unwrap();
+fn main() {
+    yew::Renderer::<Main>::new().render();
 }
