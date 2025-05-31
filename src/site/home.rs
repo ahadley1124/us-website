@@ -1,8 +1,13 @@
 use yew::prelude::*;
+use crate::site::header::Header;
 
 #[function_component(Home)]
 pub fn home() -> Html {
     html! {
+    <>
+        <div class="home-container">
+            <Header />
+        </div>
         <div class="home">
             <h1>{ "Welcome to the Home Page" }</h1>
             <p>{ "This is the home page of our Yew application." }</p>
@@ -12,5 +17,6 @@ pub fn home() -> Html {
             <p>{ "If you have any questions, feel free to reach out." }</p>
             <p>{ "Thank you for visiting!" }</p>
         </div>
+    </>
     }
 }
