@@ -52,6 +52,5 @@ fn header_style() -> String {
     .header nav ul li a:hover {
         color: #ffd700;
     }
-    "#
-    .to_string()
+    "#.to_string()
 }
