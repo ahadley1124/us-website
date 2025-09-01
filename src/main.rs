@@ -37,8 +37,8 @@ fn switch(routes: Route) -> Html {
         Route::Secure => html! {
             <Secure />
         },
-        Route::About => html! { <h1>{ "About" }</h1> },
-        Route::Contact => html! { <h1>{ "Contact" }</h1> },
+        Route::About => html! { <site::about::About /> },
+        Route::Contact => html! { <site::contact::Contact /> },
         Route::NotFound => html! { <h1>{ "404" }</h1> },
     }
 }

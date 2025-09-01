@@ -29,7 +29,7 @@ fn header_style() -> String {
     .header {
         background-color: #222;
         color: #fff;
-        padding: 1rem 0;
+        padding: 1.5rem 0;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .header nav ul {
@@ -42,6 +42,7 @@ fn header_style() -> String {
     }
     .header nav ul li {
         display: inline;
+        font-size: 1.2rem;
     }
     .header nav ul li a {
         color: #fff;
